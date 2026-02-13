@@ -1,14 +1,30 @@
-function add(num1, num2){
-return num1 + num2
+function add(a, b){
+return a + b
 }
-function subtract(num1, num2){
-return num1 - num2
+function subtract(a, b){
+return a - b
 }
-function multiply(num1, num2){
-return num1 * num2
+function multiply(a, b){
+return a * b
 }
-function divide(num1, num2){
-return num1 / num2
+function divide(a, b){
+return a / b
+}
+
+let num1= null
+let num2= null
+let operator = null
+
+function operate(operator, num1, num2){
+    if(operator === "+"){
+        return add(num1,num2)
+    }else if (operator === "-"){
+        return subtract(num1,num2)
+    }else if (operator === "*"){
+        return multiply(num1, num2)
+    }else if (operator === "/"){
+        return divide(num1,num2)
+    }
 }
 
 
