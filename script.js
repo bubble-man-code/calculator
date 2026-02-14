@@ -11,20 +11,56 @@ function divide(a, b){
 return a / b
 }
 
-let num1= null
-let num2= null
-let operator = null
+let num1= ""
+let num2= ""
+let op = null
+function operate(op, num1, num2){
+    num1 = parseInt(num1)
+    num2 = parseInt(num2)
 
-function operate(operator, num1, num2){
-    if(operator === "+"){
+    if(op === "+"){
         return add(num1,num2)
-    }else if (operator === "-"){
+    }else if (op === "-"){
         return subtract(num1,num2)
-    }else if (operator === "*"){
+    }else if (op === "*"){
         return multiply(num1, num2)
-    }else if (operator === "/"){
+    }else if (op === "/"){
         return divide(num1,num2)
     }
 }
 
 
+const display = document.getElementById("dspl")
+const digits = document.querySelectorAll(".digit")
+
+digits.forEach(digit => {
+        digit.addEventListener("click", function(){
+            if (op === null){
+num1+= digit.textContent;
+display.textContent= num1
+}else{
+num2+= digit.textContent;
+display.textContent= display.textContent = num1 + " " + op + " " + num2
+}
+})})
+
+
+const opreators = document.querySelectorAll(".operator")
+opreators.forEach(operator => {
+        operator.addEventListener("click", function(){
+op= operator.textContent;
+display.textContent = num1 + " " + op
+
+})
+});
+
+const result = document.getElementById("result")
+
+result.addEventListener("click", function(){
+let res = operate(op, num1, num2)
+display.textContent = res
+num1 = res
+num2=""
+op=null
+})
+;
