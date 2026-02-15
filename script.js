@@ -69,3 +69,11 @@ op=null
 }
 result.addEventListener("click", calc)
 ;
+const clc= document.getElementById("clearAll")
+clc.addEventListener("click",()=>{
+    display.textContent = "0"
+ clickCount = 0;
+ num1= ""
+ num2= ""
+ op = null
+})
