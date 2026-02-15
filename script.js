@@ -10,7 +10,7 @@ return a * b
 function divide(a, b){
 return a / b
 }
-
+let clickCount = 0;
 let num1= ""
 let num2= ""
 let op = null
@@ -48,19 +48,24 @@ display.textContent= display.textContent = num1 + " " + op + " " + num2
 const opreators = document.querySelectorAll(".operator")
 opreators.forEach(operator => {
         operator.addEventListener("click", function(){
-op= operator.textContent;
+            clickCount++
+            if (clickCount > 1) {
+    calc()
+    op= operator.textContent;
 display.textContent = num1 + " " + op
-
+  }else{
+op= operator.textContent;
+display.textContent = num1 + " " + op}
 })
 });
 
 const result = document.getElementById("result")
-
-result.addEventListener("click", function(){
-let res = operate(op, num1, num2)
+function calc(){
+    let res = operate(op, num1, num2)
 display.textContent = res
 num1 = res
 num2=""
 op=null
-})
+}
+result.addEventListener("click", calc)
 ;
