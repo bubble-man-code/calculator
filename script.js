@@ -38,6 +38,21 @@ const digits = document.querySelectorAll(".digit")
 
 digits.forEach(digit => {
         digit.addEventListener("click", function(){
+                    const value = digit.textContent;
+
+        // If decimal point is clicked
+        if (value === ".") {
+
+            // If entering first number
+            if (op === null) {
+                if (num1.includes(".")) return; // 🚫 already has decimal
+            } 
+            // If entering second number
+            else {
+                if (num2.includes(".")) return; // 🚫 already has decimal
+            }
+        }
+            
             if (justCalculated) {
             num1 = "";
             num2 = "";
@@ -119,3 +134,61 @@ clc.addEventListener("click",()=>{
  num2= ""
  op = null
 })
+const backspaceBtn = document.getElementById('backspaceBtn');
+
+// Add click event to the button
+backspaceBtn.addEventListener('click', () => {
+    // If entering second number
+    if (num2 !== "") {
+        num2 = num2.slice(0, -1);
+        display.textContent = num1 + " " + op + " " + num2;
+        return;
+    }
+
+    // If operator exists but no num2 yet
+    if (op !== null) {
+        op = null;
+        display.textContent = num1;
+        return;
+    }
+
+    // Otherwise modify first number
+    if (num1 !== "") {
+        num1 = num1.slice(0, -1);
+        display.textContent = num1 || "0";
+    }
+});
+document.addEventListener("keydown", (event) => {
+
+    const key = event.key;
+
+    // Equals
+    if (key === "Enter" || key === "=") {
+        result.click();
+    }
+
+    // Digits
+    if (!isNaN(key)) {
+        const digitBtn = [...digits].find(btn => btn.textContent === key);
+        if (digitBtn) digitBtn.click();
+    }
+
+    // Operators
+    if (["+", "-", "*", "/"].includes(key)) {
+        const opBtn = [...opreators].find(btn => btn.textContent === key);
+        if (opBtn) opBtn.click();
+    }
+
+    // Decimal
+    if (key === ".") {
+        const dotBtn = [...digits].find(btn => btn.textContent === ".");
+        if (dotBtn) dotBtn.click();
+    }
+
+    // Backspace
+    if (key === "Backspace") {
+        backspaceBtn.click();
+    }
+});
+
+
