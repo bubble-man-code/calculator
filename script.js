@@ -1,212 +1,159 @@
-let justCalculated = false;
+// ─── Math Operations ───────────────────────────────────────────────────────────
 
-function add(a, b){
-return a + b
-}
-function subtract(a, b){
-return a - b
-}
-function multiply(a, b){
-return a * b
-}
-function divide(a, b){
-return a / b
-}
-let clickCount = 0;
-let num1= ""
-let num2= ""
-let op = null
-function operate(op, num1, num2){
+function add(a, b)      { return a + b; }
+function subtract(a, b) { return a - b; }
+function multiply(a, b) { return a * b; }
+function divide(a, b)   { return a / b; }
+
+function operate(op, num1, num2) {
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
 
+    if (op === "+") return add(num1, num2);
+    if (op === "-") return subtract(num1, num2);
+    if (op === "*") return multiply(num1, num2);
+    if (op === "/") return divide(num1, num2);
+}
 
-    if(op === "+"){
-        return add(num1,num2)
-    }else if (op === "-"){
-        return subtract(num1,num2)
-    }else if (op === "*"){
-        return multiply(num1, num2)
-    }else if (op === "/"){
-        return divide(num1,num2)
+
+// ─── State ─────────────────────────────────────────────────────────────────────
+
+let num1           = "";
+let num2           = "";
+let op             = null;
+let clickCount     = 0;
+let justCalculated = false;
+
+
+// ─── DOM References ────────────────────────────────────────────────────────────
+
+const display      = document.getElementById("dspl");
+const result       = document.getElementById("result");
+const clcBtn       = document.getElementById("clearAll");
+const backspaceBtn = document.getElementById("backspaceBtn");
+const digits       = document.querySelectorAll(".digit");
+const operators    = document.querySelectorAll(".operator");
+
+
+// ─── Core Logic ────────────────────────────────────────────────────────────────
+
+function calc() {
+    if (op === "/" && num2 === "0") {
+        display.textContent = "thats a foul!";
+        return;
+    }
+
+    let res = operate(op, num1, num2);
+    res = parseFloat(res.toFixed(9));
+
+    display.textContent = res;
+    num1           = String(res);
+    num2           = "";
+    op             = null;
+    clickCount     = 0;
+    justCalculated = true;
+}
+
+function clearAll() {
+    display.textContent = "0";
+    num1           = "";
+    num2           = "";
+    op             = null;
+    clickCount     = 0;
+    justCalculated = false;
+}
+
+function backspace() {
+    if (num2 !== "") {
+        num2 = num2.slice(0, -1);
+        display.textContent = `${num1} ${op} ${num2}`;
+        return;
+    }
+    if (op !== null) {
+        op = null;
+        display.textContent = num1;
+        return;
+    }
+    if (num1 !== "") {
+        num1 = num1.slice(0, -1);
+        display.textContent = num1 || "0";
     }
 }
 
 
-const display = document.getElementById("dspl")
-const digits = document.querySelectorAll(".digit")
+// ─── Digit Buttons ─────────────────────────────────────────────────────────────
 
 digits.forEach(digit => {
-        digit.addEventListener("click", function(){
-                    const value = digit.textContent;
+    digit.addEventListener("click", function () {
+        const value = digit.textContent;
 
-        // If decimal point is clicked
+        // Block duplicate decimal points
         if (value === ".") {
-
-            // If entering first number
-            if (op === null) {
-                if (num1.includes(".")) return; // 🚫 already has decimal
-            } 
-            // If entering second number
-            else {
-                if (num2.includes(".")) return; // 🚫 already has decimal
-            }
+            if (op === null && num1.includes(".")) return;
+            if (op !== null && num2.includes(".")) return;
         }
-            
-            if (justCalculated) {
-            num1 = "";
-            num2 = "";
-            op = null;
-            clickCount = 0;
+
+        // Reset state after a completed calculation
+        if (justCalculated) {
+            num1           = "";
+            num2           = "";
+            op             = null;
+            clickCount     = 0;
             justCalculated = false;
         }
 
-            if (op === null){
-num1+= digit.textContent;
-display.textContent= num1
-}else{
-num2+= digit.textContent;
-display.textContent= display.textContent = num1 + " " + op + " " + num2
-}
-})})
-
-
-const opreators = document.querySelectorAll(".operator")
-/*opreators.forEach(operator => {
-        operator.addEventListener("click", function(){
-            clickCount++
-            if (clickCount > 1) {
-    calc()
-    op= operator.textContent;
-display.textContent = num1 + " " + op
-  }else if (op !== null && num2 === "") {
-            return
-        }else {
-op= operator.textContent;
-display.textContent = num1 + " " + op}
-})
-});*/
-
-opreators.forEach(operator => {
-    operator.addEventListener("click", function(){
-
-        // 🚫 No first number
-        if (num1 === "") return;
-
-        // 🚫 Prevent operator after operator
-        if (op !== null && num2 === "") {
-            return;
+        if (op === null) {
+            num1 += value;
+            display.textContent = num1;
+        } else {
+            num2 += value;
+            display.textContent = `${num1} ${op} ${num2}`;
         }
-
-        clickCount++; // increment only when valid
-
-        if (clickCount > 1 && num2 !== "") {
-            calc();
-        }
-
-        op = operator.textContent;
-        display.textContent = num1 + " " + op;
     });
 });
 
-const result = document.getElementById("result")
-function calc(){
-    if(op==="/" && num2==="0"){
-        return display.textContent = "thats a foul!"
-    }else{
-    let res = operate(op, num1, num2)
-    res = parseFloat(res.toFixed(9));
-display.textContent = res
-num1 = res
-num2=""
-op=null
-clickCount=0
-justCalculated = true;
 
-}}
-result.addEventListener("click", calc)
-;
-const clc= document.getElementById("clearAll")
-clc.addEventListener("click",()=>{
-    display.textContent = "0"
- clickCount = 0;
- num1= ""
- num2= ""
- op = null
-})
+// ─── Operator Buttons ──────────────────────────────────────────────────────────
 
-const backspaceBtn = document.getElementById('backspaceBtn');
-backspaceBtn.addEventListener('click',()=>{
-    if (num2 !==""){
-        num2=num2.slice(0,-1);
-        display.textContent = num1+" "+ op +" "+num2
-        return
-    }
-    if (op !== null){
-        op=null
-        display.textContent = num1
-        return
-    }
-    if (num1 !==""){
-        num1=num1.slice(0,-1);
-        display.textContent = num1 || 0
-        return
-    }
-})
-document.addEventListener("keydown", (event)=>{
-    const key = event.key
-    if (key === "Enter" || key ==="="){
-        result.click()
-    }
-    if (!isNaN(key)){
-        const digitBtn = [...digits].find(btn => btn.textContent === key)
-        if (digitBtn) digitBtn.click();
-    }
-    if (["+","-","*","/"].includes(key)){
-        const opBtn = [...opreators].find(btn => btn.textContent === key);
-        if (opBtn) opBtn.click();
+operators.forEach(operator => {
+    operator.addEventListener("click", function () {
+        if (num1 === "") return;                     // No first number yet
+        if (op !== null && num2 === "") return;      // Two operators in a row
 
-    }
-    if(key === "."){
-        const dotBtn = [...digits].find(btn => btn.textContent === ".");
-if (dotBtn) dotBtn.click();
+        clickCount++;
 
-    }
-    if (key === "backspace"){
-        backspaceBtn.click()
-    }
-})
-/*document.addEventListener("keydown", (event) => {
+        if (clickCount > 1 && num2 !== "") calc();   // Chain calculation
 
+        op = operator.textContent;
+        display.textContent = `${num1} ${op}`;
+    });
+});
+
+
+// ─── Button Event Listeners ────────────────────────────────────────────────────
+
+result.addEventListener("click", calc);
+clcBtn.addEventListener("click", clearAll);
+backspaceBtn.addEventListener("click", backspace);
+
+
+// ─── Keyboard Support ──────────────────────────────────────────────────────────
+
+document.addEventListener("keydown", (event) => {
     const key = event.key;
 
-    // Equals
     if (key === "Enter" || key === "=") {
         result.click();
-    }
-
-    // Digits
-    if (!isNaN(key)) {
+    } else if (!isNaN(key) && key !== " ") {
         const digitBtn = [...digits].find(btn => btn.textContent === key);
         if (digitBtn) digitBtn.click();
-    }
-
-    // Operators
-    if (["+", "-", "*", "/"].includes(key)) {
-        const opBtn = [...opreators].find(btn => btn.textContent === key);
+    } else if (["+", "-", "*", "/"].includes(key)) {
+        const opBtn = [...operators].find(btn => btn.textContent === key);
         if (opBtn) opBtn.click();
-    }
-
-    // Decimal
-    if (key === ".") {
+    } else if (key === ".") {
         const dotBtn = [...digits].find(btn => btn.textContent === ".");
         if (dotBtn) dotBtn.click();
-    }
-
-    // Backspace
-    if (key === "Backspace") {
+    } else if (key === "Backspace") {
         backspaceBtn.click();
     }
 });
-*/
-
