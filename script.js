@@ -134,31 +134,49 @@ clc.addEventListener("click",()=>{
  num2= ""
  op = null
 })
+
 const backspaceBtn = document.getElementById('backspaceBtn');
-
-// Add click event to the button
-backspaceBtn.addEventListener('click', () => {
-    // If entering second number
-    if (num2 !== "") {
-        num2 = num2.slice(0, -1);
-        display.textContent = num1 + " " + op + " " + num2;
-        return;
+backspaceBtn.addEventListener('click',()=>{
+    if (num2 !==""){
+        num2=num2.slice(0,-1);
+        display.textContent = num1+" "+ op +" "+num2
+        return
     }
-
-    // If operator exists but no num2 yet
-    if (op !== null) {
-        op = null;
-        display.textContent = num1;
-        return;
+    if (op !== null){
+        op=null
+        display.textContent = num1
+        return
     }
-
-    // Otherwise modify first number
-    if (num1 !== "") {
-        num1 = num1.slice(0, -1);
-        display.textContent = num1 || "0";
+    if (num1 !==""){
+        num1=num1.slice(0,-1);
+        display.textContent = num1 || 0
+        return
     }
-});
-document.addEventListener("keydown", (event) => {
+})
+document.addEventListener("keydown", (event)=>{
+    const key = event.key
+    if (key === "Enter" || key ==="="){
+        result.click()
+    }
+    if (!isNaN(key)){
+        const digitBtn = [...digits].find(btn => btn.textContent === key)
+        if (digitBtn) digitBtn.click();
+    }
+    if (["+","-","*","/"].includes(key)){
+        const opBtn = [...opreators].find(btn => btn.textContent === key);
+        if (opBtn) opBtn.click();
+
+    }
+    if(key === "."){
+        const dotBtn = [...digits].find(btn => btn.textContent === ".");
+if (dotBtn) dotBtn.click();
+
+    }
+    if (key === "backspace"){
+        backspaceBtn.click()
+    }
+})
+/*document.addEventListener("keydown", (event) => {
 
     const key = event.key;
 
@@ -190,5 +208,5 @@ document.addEventListener("keydown", (event) => {
         backspaceBtn.click();
     }
 });
-
+*/
 
