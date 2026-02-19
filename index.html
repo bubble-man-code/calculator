@@ -4,37 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>calculator</title>
+    <title>Calculator</title>
 </head>
 <body>
-    <div class="calculator">
-    <div  id="dspl">
-        <span class="display">0</span>
-    </div> 
-    <div class="digits">
-    <button class="digit" id="0">0</button>
-    <button class="digit" id="0">1</button>
-    <button class="digit" id="2">2</button>
-    <button class="digit" id="3">3</button>
-    <button class="digit" id="4">4</button>
-    <button class="digit" id="5">5</button>
-    <button class="digit" id="6">6</button>
-    <button class="digit" id="7">7</button>
-    <button class="digit" id="8">8</button>
-    <button class="digit" id="9">9</button>
-    <button class="digit">.</button>
-    </div>
-    <div class="operators">
-        <button class="operator">+</button>
-        <button class="operator">-</button>
-        <button class="operator">*</button>
-        <button class="operator">/</button>
-        <button id="result">=</button>
-    </div>
-    </div> 
 
-    <button class="clear" id="clearAll"> clear</button>
-    <button id="backspaceBtn" > undo</button>
+    <div class="calculator">
+
+        <!-- Display -->
+        <div id="dspl">0</div>
+
+        <!-- Buttons -->
+        <div class="buttons">
+
+            <!-- Row 1 -->
+            <button class="clear" id="clearAll">C</button>
+            <button id="backspaceBtn">⌫</button>
+            <button class="operator">/</button>
+            <button class="operator">*</button>
+
+            <!-- Row 2 -->
+            <button class="digit">7</button>
+            <button class="digit">8</button>
+            <button class="digit">9</button>
+            <button class="operator">-</button>
+
+            <!-- Row 3 -->
+            <button class="digit">4</button>
+            <button class="digit">5</button>
+            <button class="digit">6</button>
+            <button class="operator">+</button>
+
+            <!-- Row 4 -->
+            <button class="digit">1</button>
+            <button class="digit">2</button>
+            <button class="digit">3</button>
+            <button id="result" class="span-2-rows">=</button>
+
+            <!-- Row 5 -->
+            <button class="digit span-2-cols">0</button>
+            <button class="digit">.</button>
+
+        </div>
+
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
