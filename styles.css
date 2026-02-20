@@ -1,49 +1,93 @@
+/* ─── Reset ────────────────────────────────────────────────────────────────── */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ─── Page ─────────────────────────────────────────────────────────────────── */
+
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 10px;
 }
-.calculator{
-    border: 3px solid;
+
+/* ─── Calculator Wrapper ───────────────────────────────────────────────────── */
+
+.calculator {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-
-}
-.display{
-    border: 1px solid blue;
-    width: 80vh;
-    margin: 2%;
-    padding: 3px;
-    background-color: darkgreen;
-
-}
-.buttons{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1.5fr;
-    grid-template-rows: 1.5fr 1fr;
-    gap: 2px;
-    margin: 8px;
-}
-.digit{
-    width:120px;
+    border: 3px solid;
+    overflow: hidden;
+    border-radius: 10px;
     
 }
-.operator{
 
-}
-.dim{
+/* ─── Display Section ──────────────────────────────────────────────────────── */
+
+.dim {
     background-color: dimgrey;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    display: flex;
-    justify-content: center;
-    justify-items: center;
+    padding: 8px;
 }
-.bright{
+
+.display {
+    background-color: darkgreen;
+    border: 1px solid blue;
+    color: white;
+    padding: 6px 10px;
+    text-align: right;
+    font-size: 1.4rem;
+    width: 100%;
+}
+
+/* ─── Buttons Section ──────────────────────────────────────────────────────── */
+
+.bright {
     background-color: lightsteelblue;
+    padding: 8px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 120px);
+    gap: 4px;
+}
+
+.buttons button {
+    
+    cursor: pointer;
+    font-size: 1rem;
+    border: 1px solid #aaa;
+    width: 100%;
+    height: 40px;
+}
+
+/* ─── Button Variants ──────────────────────────────────────────────────────── */
+
+.operator {
+    background-color: steelblue;
+    color: white;
+}
+
+#clearAll {
+    background-color: indianred;
+    color: white;
+}
+
+#backspaceBtn {
+    background-color: lightcoral;
+}
+
+#result {
+    background-color: seagreen;
+    color: white;
+    grid-row: span 2;
+}
+
+.span-2-cols {
+    grid-column: span 2;
 }
